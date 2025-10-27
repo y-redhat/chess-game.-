@@ -1,0 +1,97 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+#chess-board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    width: 400px;
+    height: 400px;
+}
+
+.square {
+    width: 50px;
+    height: 50px;
+}
+
+.white {
+    background-color: white;
+}
+
+.black {
+    background-color: gray;
+}
+
+/* 駒のスタイル */
+.piece {
+    width: 50px; /* 駒の幅 */
+    height: 50px; /* 駒の高さ */
+    background-size: cover; /* 背景画像をカバーする */
+}
+
+/* ポーン */
+.white-pawn {
+    background-image: url('path/to/white-pawn.png'); /* 白いポーンの画像 */
+}
+
+.black-pawn {
+    background-image: url('path/to/black-pawn.png'); /* 黒いポーンの画像 */
+}
+
+/* ルーク */
+.white-rook {
+    background-image: url('path/to/white-rook.png'); /* 白いルークの画像 */
+}
+
+.black-rook {
+    background-image: url('path/to/black-rook.png'); /* 黒いルークの画像 */
+}
+
+/* ナイト */
+.white-knight {
+    background-image: url('path/to/white-knight.png'); /* 白いナイトの画像 */
+}
+
+.black-knight {
+    background-image: url('path/to/black-knight.png'); /* 黒いナイトの画像 */
+}
+
+/* ビショップ */
+.white-bishop {
+    background-image: url('path/to/white-bishop.png'); /* 白いビショップの画像 */
+}
+
+.black-bishop {
+    background-image: url('path/to/black-bishop.png'); /* 黒いビショップの画像 */
+}
+
+/* クイーン */
+.white-queen {
+    background-image: url('path/to/white-queen.png'); /* 白いクイーンの画像 */
+}
+
+.black-queen {
+    background-image: url('path/to/black-queen.png'); /* 黒いクイーンの画像 */
+}
+
+/* キング */
+.white-king {
+    background-image: url('path/to/white-king.png'); /* 白いキングの画像 */
+}
+
+.black-king {
+    background-image: url('path/to/black-king.png'); /* 黒いキングの画像 */
+}
+
+
+/*各駒のスタイルについて
+ポーン: .white-pawn と .black-pawn
+ルーク: .white-rook と .black-rook
+ナイト: .white-knight と .black-knight
+ビショップ: .white-bishop と .black-bishop
+クイーン: .white-queen と .black-queen
+キング: .white-king と .black-king*/
