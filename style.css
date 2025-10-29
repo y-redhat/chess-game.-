@@ -34,7 +34,7 @@ body {
   height: 5rem;
   
   /* 色 */
-  background-color: green;
+  background-color: white;
   box-shadow: none !important;
 
   /* フォントサイズ */
@@ -50,7 +50,7 @@ body {
 }
 
 .cant-select {
-  background-color: green !important;
+  background-color: white !important;
 }
 
 #controller {
