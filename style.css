@@ -5,8 +5,11 @@ body {
 
 #chessboard {
     display: grid;
-    grid-template-columns: repeat(8, 60px); /* 8列のグリッド */
-    grid-template-rows: repeat(8, 60px); /* 8行のグリッド */
+    grid-template-columns: repeat(8, 1fr); /* 8列のグリッド */
+    grid-template-rows: repeat(8, 1fr); /* 8行のグリッド */
+    gap: 0; /* グリッド間のスペースを0に */
+    width: 480px; /* 全体の幅を480pxに */
+    height: 480px; /* 全体の高さを480pxに */
 }
 
 .chess-square {
@@ -28,4 +31,3 @@ body {
     background-color: #000; /* 黒マス */
     color: #fff; /* 黒マスの文字色を白に */
 }
-
