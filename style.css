@@ -1,1 +1,31 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+#chessboard {
+    display: grid;
+    grid-template-columns: repeat(8, 60px); /* 8列のグリッド */
+    grid-template-rows: repeat(8, 60px); /* 8行のグリッド */
+}
+
+.chess-square {
+    width: 60px; /* 各マスの幅 */
+    height: 60px; /* 各マスの高さ */
+    border: 1px solid #000; /* ボーダーを追加 */
+    font-size: 36px; /* 絵文字のサイズ */
+    display: flex; /* 中央揃え */
+    align-items: center; /* 縦中央揃え */
+    justify-content: center; /* 横中央揃え */
+    cursor: pointer; /* カーソルをポインターに */
+}
+
+.white {
+    background-color: #fff; /* 白マス */
+}
+
+.black {
+    background-color: #000; /* 黒マス */
+    color: #fff; /* 黒マスの文字色を白に */
+}
 
