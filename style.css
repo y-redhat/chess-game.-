@@ -64,6 +64,14 @@ body {
 
 
 
+.piece {
+  font-size: 3rem; /* 駒のサイズ */
+  color: black; /* 駒の色（黒） */
+}
+
+.white-piece {
+  color: white; /* 駒の色（白） */
+}
 
 
 
