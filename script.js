@@ -1,8 +1,17 @@
-function initializeBoard() {}
-   for(let row =0; row < 8; row++)
-   for(let col =0, col < 8; row++)
-             const square = document.createElement('div')
-square.classLidt.add("square");
+########################
+//定義
+########################
+ *****************************************/
+$(function () {
+    // マス目にイベントを設定する
+    $(".square").click(clickSquareEvent);
+
+    // 初期化ボタンを押したときのイベント
+    $("#btn-initialize").click(initializeEvent);
+
+    // 盤面を初期化する
+    initializeEvent();
+});
 
        
 
