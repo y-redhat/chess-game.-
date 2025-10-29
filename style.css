@@ -11,7 +11,7 @@ body {
   text-align: center;
 
   /* 色 */
-  color: white;
+  color: antiquewhite;
 }
 
 #board {
@@ -34,7 +34,7 @@ body {
   height: 5rem;
   
   /* 色 */
-  background-color: white; /* ボタンの背景色を白に変更 */
+  background-color: green;
   box-shadow: none !important;
 
   /* フォントサイズ */
@@ -50,7 +50,7 @@ body {
 }
 
 .cant-select {
-  background-color: white !important; /* 選択不可ボタンの背景色も白に変更 */
+  background-color: green !important;
 }
 
 #controller {
@@ -59,6 +59,15 @@ body {
   top: 1rem;
   left: 1rem;
 }
+
+
+
+
+
+
+
+
+
 
 
 
