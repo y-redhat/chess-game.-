@@ -1,4 +1,6 @@
 # chess-game.-
-chess game 
+chess game 開発log
 チェスゲーム開発
 お楽しみに
+10/どっか　スタイル完成ンゴ
+11/1　動けるようになったンゴ
