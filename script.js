@@ -1,5 +1,7 @@
+//Tsかけない人は変化を加えたらaiにTsにしてもらってscript.tsの方にも変化を加える。
 let selectedPiece = null;
 let selectedSquare = null;
+let piceClass = null; //新規追加　クラスごとの動きの追加
 
 function changePiece(element) {
     const piece = element.innerHTML; // クリックされたマスの現在の駒
@@ -14,7 +16,7 @@ function changePiece(element) {
         // 駒を選択状態にする
         selectedPiece = piece;
         selectedSquare = element;
-        
+        // piceClass = 〇〇　htmlの方にid付与が必要 修正ポイント追加済
         // 選択されたマスにハイライトなどの視覚的な変化を適用（CSSファイルが必要）
         element.classList.add('selected');
         
@@ -22,7 +24,7 @@ function changePiece(element) {
 
     // 2. 駒が選択されている場合 
     } else {
-        // 選択中のマスを再度クリックした場合、選択解除する
+        // 選択中のマスを再度クリックした場合、選択解除する　このとき大きさなどを変えたい
         if (element === selectedSquare) {
             selectedSquare.classList.remove('selected');
             selectedPiece = null;
