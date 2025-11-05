@@ -29,7 +29,7 @@ function changePiece(element) {
             selectedSquare.classList.remove('selected');
             selectedPiece = null;
             selectedSquare = null;
-            console.log("選択解除しました"); //コンソールをプレイヤーにみれるようにする必要ある　もしくは視覚的にわかりやすくする。
+            console.log("選択解除しました"); //コンソールをプレイヤーにみれるようにする必要ある　もしくは視覚的にわかりやすくしたい y-
             return;
         }
 
