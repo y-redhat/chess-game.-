@@ -16,6 +16,7 @@ function changePiece(element) {
         // 駒を選択状態にする
         selectedPiece = piece;
         selectedSquare = element;
+        element.style.backgroundColor="#ff0000"
         // piceClass = 〇〇　htmlの方にid付与が必要 修正ポイント追加済
         // 選択されたマスにハイライトなどの視覚的な変化を適用（CSSファイルが必要）
         element.classList.add('selected');
@@ -47,10 +48,11 @@ function changePiece(element) {
         
         // 選択状態をリセット
         selectedSquare.classList.remove('selected');
+        console.log(`駒を移動: ${selectedPiece} to ${element.id}`);
+        selectedSquare.style.backgroundColor="#ffffff"
         selectedPiece = null;
         selectedSquare = null;
         
-        console.log(`駒を移動: ${selectedPiece} to ${element.id}`);
     }
 }
 //初期化ないけどなんか更新したら戻った(笑)
