@@ -1,3 +1,4 @@
+//about p2p https://peerjs.com/docs/#start 重要！
 // 選択中の駒の情報を保持する変数
 // null または string 型
 let selectedPiece: string | null = null; 
