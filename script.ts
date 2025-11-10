@@ -48,6 +48,9 @@ function changePiece(element: HTMLElement): void {
         if (piece !== '') {
              console.log(`駒を取ります: ${piece} at ${element.id}`);
         }
+        if (){
+            //同じ色だと取らない
+        }
         
         // 選択された駒を新しいマスに配置 (innerHTMLの書き換え)
         element.innerHTML = selectedPiece; 
