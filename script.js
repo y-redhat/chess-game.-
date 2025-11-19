@@ -14,7 +14,7 @@ function changePiece(element) {
         // 駒のないマスをクリックした場合は何もしない
         if (piece === '') {
             return;
-        }
+        }  //なんでだよー自分のやつ食われるやん
 
         if(piece !== currentPlayer){
             console.log("自分の駒以外選べない");
