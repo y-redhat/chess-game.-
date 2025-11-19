@@ -2,14 +2,22 @@
 let selectedPiece = null;
 let selectedSquare = null;
 let piceClass = null; //新規追加　クラスごとの動きの追加
+let currentPlayer = "white"; //現在のプレイヤー　白or黒
 
 function changePiece(element) {
     const piece = element.innerHTML; // クリックされたマスの現在の駒
+    const pieceColor = element.getAttribute('data-piece')?
+        element.getAttribute('data-piece').split('-')[1]:null;//コマは何色?
 
     // 1. 駒が選択されていない場合
     if (selectedPiece === null) {
         // 駒のないマスをクリックした場合は何もしない
         if (piece === '') {
+            return;
+        }
+
+        if(piece !== currentPlayer){
+            console.log("自分の駒以外選べない");
             return;
         }
 
@@ -34,22 +42,33 @@ function changePiece(element) {
             return;
         }
 
-        // 相手の駒があるマスをクリックした場合
-        if (piece !== '') {
-             // 実際には、駒の種類や色による複雑な判定が必要　重要
-             console.log(`駒を取ります: ${piece} at ${element.id}`);
+        //自分の駒を食う
+        if (piece === currentPlayer){
+            console.log("自分のものは食べられない")
+            return;
         }
+
+        // 相手の駒があるマスをクリックした場合
+       // if (piece !== '') {
+             // 実際には、駒の種類や色による複雑な判定が必要　重要
+         //    console.log(`駒を取ります: ${piece} at ${element.id}`);
+        //}
         
         // 選択された駒を新しいマスに配置 (innerHTMLの書き換え)
         element.innerHTML = selectedPiece; 
         
-        // 元のマスを空にする
-        selectedSquare.innerHTML = '';
-        
-        // 選択状態をリセット
-        selectedSquare.classList.remove('selected');
+        if (selectedSquare) {
+            selectedSquare.innerHTML = '';
+            selectedSquare.classList.remove('selected');
+            selectedSquare.style.backgroundColor = "#ffffff"; // 元のマスの背景色を戻す
+        }
+
         console.log(`駒を移動: ${selectedPiece} to ${element.id}`);
-        selectedSquare.style.backgroundColor="#ffffff"
+
+        surrentPlayer = surrentPlayer === 'white' ? 'black':'white';
+        console.log(`次のターンは: ${currentPlayer}`);
+        // 選択状態をリセット
+    
         selectedPiece = null;
         selectedSquare = null;
         
