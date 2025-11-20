@@ -1,33 +1,48 @@
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
 #chessboard {
     display: grid;
-    grid-template-columns: repeat(8, 1fr); /* 8列のグリッド */
-    grid-template-rows: repeat(8, 1fr); /* 8行のグリッド */
-    gap: 0; /* グリッド間のスペースを0に */
-    width: 480px; /* 全体の幅を480pxに */
-    height: 480px; /* 全体の高さを480pxに */
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: 480px;
+    height: 480px;
+    border: 2px solid #000;
 }
 
 .chess-square {
-    width: 60px; /* 各マスの幅 */
-    height: 60px; /* 各マスの高さ */
-    border: 1px solid #000; /* ボーダーを追加 */
-    font-size: 36px; /* 絵文字のサイズ */
-    display: flex; /* 中央揃え */
-    align-items: center; /* 縦中央揃え */
-    justify-content: center; /* 横中央揃え */
-    cursor: pointer; /* カーソルをポインターに */
+    width: 60px;
+    height: 60px;
+    border: 1px solid #000;
+    font-size: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
 .white {
-    background-color: #fff; /* 白マス */
+    background-color: #fff;
 }
 
 .black {
-    background-color: #000; /* 黒マス */
-    color: #fff; /* 黒マスの文字色を白に */
+    background-color: #000;
+    color: #fff;
+}
+
+.selected {
+    outline: 3px solid red;
+}
+
+.highlight {
+    background-color: yellow;
 }
