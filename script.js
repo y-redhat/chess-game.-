@@ -1,77 +1,142 @@
-//Tsかけない人は変化を加えたらaiにTsにしてもらってscript.tsの方にも変化を加える。
+
 let selectedPiece = null;
 let selectedSquare = null;
-let piceClass = null; //新規追加　クラスごとの動きの追加
-let currentPlayer = "white"; //現在のプレイヤー　白or黒
+let currentPlayer = "white";
 
+// P2P 用
+let peer = new Peer(); // ランダム ID
+let conn = null;
+
+// 接続されたら相手に自分のターン情報を送信
+peer.on('open', function(id) {
+    console.log('My peer ID: ' + id);
+});
+
+// 受信
+peer.on('connection', function(c) {
+    conn = c;
+    conn.on('data', function(data) {
+        handleRemoteMove(data);
+    });
+});
+
+// 駒の移動
 function changePiece(element) {
-    const piece = element.innerHTML; // クリックされたマスの現在の駒
-    const pieceColor = element.getAttribute('data-piece')?
-        element.getAttribute('data-piece').split('-')[1]:null;//コマは何色?
+    const piece = element.innerHTML;
+    const pieceColor = element.getAttribute('data-piece') ? element.getAttribute('data-piece').split('-')[1] : null;
 
-    // 1. 駒が選択されていない場合
-    if (selectedPiece === null) {
-        // 駒のないマスをクリックした場合は何もしない
-        if (piece === '') {
-            return;
-        }  //なんでだよー自分のやつ食われるやん
+    if (pieceColor !== currentPlayer && selectedPiece === null) return;
 
-        if(piece !== currentPlayer){
-            console.log("自分の駒以外選べない");
-            return;
-        }
-
-        // 駒を選択状態にする
+    if (!selectedPiece) {
+        if (piece === '') return;
         selectedPiece = piece;
         selectedSquare = element;
-        element.style.backgroundColor="#ff0000"
-        // piceClass = 〇〇　htmlの方にid付与が必要 修正ポイント追加済
-        // 選択されたマスにハイライトなどの視覚的な変化を適用（CSSファイルが必要）
         element.classList.add('selected');
-        
-        console.log(`駒を選択: ${selectedPiece} from ${element.id}`);
+        highlightMoves(selectedSquare);
+        return;
+    }
 
-    // 2. 駒が選択されている場合 
-    } else {
-        // 選択中のマスを再度クリックした場合、選択解除する　このとき大きさなどを変えたい
-        if (element === selectedSquare) {
-            selectedSquare.classList.remove('selected');
-            selectedPiece = null;
-            selectedSquare = null;
-            console.log("選択解除しました"); //コンソールをプレイヤーにみれるようにする必要ある　もしくは視覚的にわかりやすくしたい y-
-            return;
-        }
-
-        //自分の駒を食う
-        if (piece === currentPlayer){
-            console.log("自分のものは食べられない")
-            return;
-        }
-
-        // 相手の駒があるマスをクリックした場合
-       // if (piece !== '') {
-             // 実際には、駒の種類や色による複雑な判定が必要　重要
-         //    console.log(`駒を取ります: ${piece} at ${element.id}`);
-        //}
-        
-        // 選択された駒を新しいマスに配置 (innerHTMLの書き換え)
-        element.innerHTML = selectedPiece; 
-        
-        if (selectedSquare) {
-            selectedSquare.innerHTML = '';
-            selectedSquare.classList.remove('selected');
-            selectedSquare.style.backgroundColor = "#ffffff"; // 元のマスの背景色を戻す
-        }
-
-        console.log(`駒を移動: ${selectedPiece} to ${element.id}`);
-
-        surrentPlayer = surrentPlayer === 'white' ? 'black':'white';
-        console.log(`次のターンは: ${currentPlayer}`);
-        // 選択状態をリセット
-    
+    if (element === selectedSquare) {
+        selectedSquare.classList.remove('selected');
         selectedPiece = null;
         selectedSquare = null;
-        
+        clearHighlights();
+        return;
     }
+
+    if (!isValidMove(selectedSquare.id, element.id, selectedPiece)) {
+        console.log('Invalid move!');
+        return;
+    }
+
+    movePiece(selectedSquare, element);
+    clearHighlights();
+
+    // 相手に同期
+    if (conn) {
+        conn.send({
+            from: selectedSquare.id,
+            to: element.id,
+            piece: selectedPiece
+        });
+    }
+
+    switchPlayer();
+    selectedPiece = null;
+    selectedSquare = null;
 }
-//初期化ないけどなんか更新したら戻った(笑)
+
+// 駒を移動
+function movePiece(fromEl, toEl) {
+    toEl.innerHTML = fromEl.innerHTML;
+    toEl.setAttribute('data-piece', fromEl.getAttribute('data-piece'));
+    fromEl.innerHTML = '';
+    fromEl.removeAttribute('data-piece');
+    fromEl.classList.remove('selected');
+}
+
+// ルール判定（駒ごと）
+function isValidMove(fromId, toId, piece) {
+    // ここに各駒のルールチェックを追加（簡略例）
+    const [fromRow, fromCol] = fromId.split('-').slice(1).map(Number);
+    const [toRow, toCol] = toId.split('-').map(Number);
+    const pieceType = piece.split('-')[0];
+
+    switch(pieceType) {
+        case 'pwan':
+            const dir = piece.includes('white') ? -1 : 1;
+            if (fromCol === toCol && toRow === fromRow + dir) return true;
+            break;
+        case 'luke':
+            if (fromRow === toRow || fromCol === toCol) return true;
+            break;
+        case 'bishop':
+            if (Math.abs(fromRow - toRow) === Math.abs(fromCol - toCol)) return true;
+            break;
+        case 'queen':
+            if (fromRow === toRow || fromCol === toCol || Math.abs(fromRow - toRow) === Math.abs(fromCol - toCol)) return true;
+            break;
+        case 'king':
+            if (Math.abs(fromRow - toRow) <= 1 && Math.abs(fromCol - toCol) <= 1) return true;
+            break;
+        case 'night':
+            if ((Math.abs(fromRow - toRow) === 2 && Math.abs(fromCol - toCol) === 1) ||
+                (Math.abs(fromRow - toRow) === 1 && Math.abs(fromCol - toCol) === 2)) return true;
+            break;
+    }
+    return false;
+}
+
+// ターン切り替え
+function switchPlayer() {
+    currentPlayer = currentPlayer === 'white' ? 'black' : 'white';
+    console.log('Next player: ' + currentPlayer);
+}
+
+// 相手からの動きを反映
+function handleRemoteMove(data) {
+    const fromEl = document.getElementById(data.from);
+    const toEl = document.getElementById(data.to);
+    movePiece(fromEl, toEl);
+    switchPlayer();
+}
+
+// ハイライト
+function highlightMoves(squareEl) {
+    // 実装例：簡易で周囲の1マスを黄色に
+    const id = squareEl.id;
+    const [row, col] = id.split('-').slice(1).map(Number);
+    const moves = [
+        [row+1, col], [row-1,col],[row,col+1],[row,col-1],
+        [row+1,col+1],[row+1,col-1],[row-1,col+1],[row-1,col-1]
+    ];
+    moves.forEach(m => {
+        const el = document.getElementById(`square-${m[0]}-${m[1]}`);
+        if (el) el.classList.add('highlight');
+    });
+}
+
+function clearHighlights() {
+    document.querySelectorAll('.highlight').forEach(el => el.classList.remove('highlight'));
+}
+
