@@ -1,4 +1,5 @@
 
+// ====== server.js ======
 const express = require("express");
 const http = require("http");
 const WebSocket = require("ws");
@@ -14,10 +15,10 @@ app.use(express.static(path.join(__dirname, "public")));
 let rooms = []; // { players: [ws1, ws2] }
 
 function assignRoom(ws) {
-    // まだ入れるルームがあるか？
+    // 入れる部屋を探す（2人未満）
     let room = rooms.find(r => r.players.length < 2);
 
-    // もし空いてる部屋がないなら新しい部屋を作る
+    // 無ければ新しい部屋
     if (!room) {
         room = { players: [] };
         rooms.push(room);
@@ -26,38 +27,44 @@ function assignRoom(ws) {
     room.players.push(ws);
     ws.room = room;
 
-    // プレイヤーの色を決定
+    // 白黒割り当て
     const color = room.players.length === 1 ? "white" : "black";
 
     ws.send(JSON.stringify({
-        type: "assign_color",
+        type: "assign",
         color: color,
         roomId: rooms.indexOf(room) + 1
     }));
-
-    return room;
 }
 
 wss.on("connection", (ws) => {
-    console.log("Client connected");
-
-    // ルームに自動配置
-    const room = assignRoom(ws);
+    assignRoom(ws);
 
     ws.on("message", (msg) => {
-        // 同じルームの相手にだけ送る
-        room.players.forEach(player => {
-            if (player !== ws && player.readyState === WebSocket.OPEN) {
-                player.send(msg);
+        const data = JSON.parse(msg);
+        const room = ws.room;
+
+        // 相手だけに送る
+        room.players.forEach(p => {
+            if (p !== ws && p.readyState === WebSocket.OPEN) {
+                p.send(JSON.stringify({
+                    type: "move",
+                    from: data.from,
+                    to: data.to,
+                    piece: data.piece
+                }));
             }
         });
     });
 
     ws.on("close", () => {
         // ルームから削除
+        const room = ws.room;
+        if (!room) return;
+
         room.players = room.players.filter(p => p !== ws);
 
-        // 空のルームは削除
+        // 全員いなければ部屋削除
         if (room.players.length === 0) {
             rooms = rooms.filter(r => r !== room);
         }
@@ -66,4 +73,3 @@ wss.on("connection", (ws) => {
 
 const PORT = process.env.PORT || 10000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
