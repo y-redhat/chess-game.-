@@ -45,3 +45,7 @@ body {
 .highlight {
   background-color: yellow;
 }
+
+#chess {
+  display: grid;
+}
