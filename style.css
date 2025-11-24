@@ -1,48 +1,47 @@
-
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
 #chessboard {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(8, 1fr);
-    width: 480px;
-    height: 480px;
-    border: 2px solid #000;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  width: 480px;
+  height: 480px;
+  border: 2px solid #000;
 }
 
 .chess-square {
-    width: 60px;
-    height: 60px;
-    border: 1px solid #000;
-    font-size: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background-color 0.2s;
+  width: 60px;
+  height: 60px;
+  border: 1px solid #000;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .white {
-    background-color: #fff;
+  background-color: #fff;
 }
 
 .black {
-    background-color: #000;
-    color: #fff;
+  background-color: #000;
+  color: #fff;
 }
 
 .selected {
-    outline: 3px solid red;
+  outline: 3px solid red;
 }
 
 .highlight {
-    background-color: yellow;
+  background-color: yellow;
 }
