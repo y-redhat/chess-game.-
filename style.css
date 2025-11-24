@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  background-color: rgb(211, 192, 167);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,9 +47,11 @@ body {
 }
 
 #chess {
+  padding: 30px;
   display: flex;
   flex-direction: column;
-  
+  /* border-left: burlywood 10px solid;
+  border-right: burlywood 10px solid; */
 }
 
 #chess > h1 {
@@ -66,4 +68,20 @@ body {
   z-index: 1;
   bottom: -5px;
   translate: translateX(-50%);
+}
+
+#fullscreen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  background-color: rgb(211, 192, 167);
+}
+
+#fullscreen-btn {
+  display: inline;
+  margin-top: 5px;
+  height: 15px;
+  width: 15px;
+  font-size: 16px;
+  cursor: pointer;
 }

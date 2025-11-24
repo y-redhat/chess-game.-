@@ -1,3 +1,15 @@
+//フルスクリーン
+document.getElementById("fullscreen-btn").addEventListener("click", () => {
+    const fullscreenElement = document.getElementById("fullscreen");
+    if (fullscreenElement.requestFullscreen) {
+        fullscreenElement.requestFullscreen(); // フルスクリーンを開始
+    } else if (fullscreenElement.webkitRequestFullscreen) { // Safari用
+        fullscreenElement.webkitRequestFullscreen();
+    } else if (fullscreenElement.msRequestFullscreen) { // IE/Edge用
+        fullscreenElement.msRequestFullscreen();
+    }
+});
+
 
 
 let selectedPiece = null;
