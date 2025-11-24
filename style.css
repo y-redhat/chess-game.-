@@ -47,5 +47,23 @@ body {
 }
 
 #chess {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+#chess > h1 {
+  position: relative;
+  z-index: 1;
+}
+
+#chess > h1::before {
+  content: "";
+  position: absolute;
+  background-color: burlywood;
+  height: 5px;
+  width: 100px;
+  z-index: 1;
+  bottom: -5px;
+  translate: translateX(-50%);
 }
