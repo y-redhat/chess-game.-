@@ -55,6 +55,7 @@ body {
 }
 
 #chess > h1 {
+  text-align: center;
   position: relative;
   z-index: 1;
 }
@@ -64,7 +65,7 @@ body {
   position: absolute;
   background-color: burlywood;
   height: 5px;
-  width: 100px;
+  width: 6em;
   z-index: 1;
   bottom: -5px;
   translate: translateX(-50%);
@@ -73,7 +74,10 @@ body {
 #fullscreen {
   display: flex;
   flex-direction: column;
-  justify-content: center; 
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
   background-color: rgb(211, 192, 167);
 }
 
